@@ -16,7 +16,7 @@ This installs `transformers` and `torch`. The model weights are downloaded from 
 2. The text is passed to a Hugging Face `text-classification` pipeline, which returns a label (for the default model, `INJECTION` or `SAFE`) and a score.
 3. An injection label (`INJECTION` for the default model) with a score at or above `threshold` (default: 0.85) is reported as a match at the detector's `severity` (default: `HIGH`).
 
-The default model is [`protectai/deberta-v3-base-prompt-injection-v2`](https://huggingface.co/protectai/deberta-v3-base-prompt-injection-v2). If it cannot be loaded, the detector tries [`deepset/deberta-v3-base-injection`](https://huggingface.co/deepset/deberta-v3-base-injection) before giving up.
+The default model is [`protectai/deberta-v3-base-prompt-injection-v2`](https://huggingface.co/protectai/deberta-v3-base-prompt-injection-v2). If it cannot be loaded, the detector tries [`deepset/deberta-v3-base-injection`](https://huggingface.co/deepset/deberta-v3-base-injection) before giving up. The same fallback applies when a custom `model_name` fails to load. It does not apply when `transformers` is not installed: the detector is then disabled and never matches. When the fallback model is in use, match messages and `metadata["model"]` still name the configured model, not `deepset/deberta-v3-base-injection`.
 
 By default the model is loaded on the first inspected value (`lazy_load=True`). Pass `lazy_load=False` to load it when the detector is created.
 
